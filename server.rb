@@ -5,8 +5,8 @@ require 'digest'
 require_relative 'ar.rb'
 require_relative 'handlers/email.rb'
 
-port = YAML.load_file('config/config.yaml')['port']
-puts 'Starting up server...'
+port = ENV['PORT'] || YAML.load_file('config/config.yaml')['port']
+puts "Starting up server at port #{port}..."
 puts File.dirname(__FILE__) + '/public'
 server = WEBrick::HTTPServer.new(:Port => port, :DocumentRoot => File.dirname(__FILE__) + '/public')
 
