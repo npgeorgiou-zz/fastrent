@@ -13,7 +13,7 @@ require_relative 'util/hash'
 
 config = YAML.load_file('config/config.yaml')
 
-port = ENV['PORT'] || config.dig("server.#{environment}.port")
+port = ENV['PORT'] || 3000
 puts "Starting up server at port #{port}..."
 server = WEBrick::HTTPServer.new(:Port => port, :DocumentRoot => File.dirname(__FILE__) + '/public')
 
@@ -227,9 +227,8 @@ server.mount_proc '/user/login' do |req, res|
   res.body = result
 end
 server.mount_proc '/user/logout' do |req, res|
-  token   = req.header['authorization'][0]
+  token  = req.header['authorization'][0]
   puts token
-
   # Check if a user with this token exists
   if token != 'null'
     user = User.includes(:memberships).find_by token: token

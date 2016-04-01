@@ -96,10 +96,9 @@ app.controller('MainController', ['$scope', '$rootScope', '$location', '$http', 
             $http({
                 method: 'POST',
                 url   : '/user/logout',
-                data  : {
-                    token: authenticationService.getUserToken()
+                headers: {
+                    'Authorization': authenticationService.getUserToken()
                 }
-
             }).success(function (data, status, headers, config) {
                 console.log(data);
 
@@ -121,7 +120,7 @@ app.controller('MainController', ['$scope', '$rootScope', '$location', '$http', 
     }]);
 
 app.service('settingsService', function () {
-    var prefix = 'finders_keepers.';
+    var prefix = 'fastrent.';
     //var userSettings = null;
     var defaultSettings = {
         site:   ['Boligportal', 'Dba', 'Boligbasen'],
@@ -154,7 +153,7 @@ app.service('settingsService', function () {
 });
 
 app.service('authenticationService', ['$rootScope', 'intervalService', 'settingsService', function($rootScope, intervalService, settingsService) {
-    var prefix = 'finders_keepers.';
+    var prefix = 'fastrent.';
 
     function logInUser(token) {
         localStorage.setItem(prefix + 'user.token', token);
