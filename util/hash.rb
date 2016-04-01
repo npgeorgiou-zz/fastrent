@@ -2,9 +2,9 @@ class Hash
 
   # Dig inside a hash, moving a lever deeper each time. Bail if a property is not a hash
   # return true on successful path following, nil on failure
-  def dig(*path)
+  def dig(path)
 
-    dig_result = path.inject(self) { |location, key|
+    dig_result = path.split('.').inject(self) { |location, key|
       if (!location.is_a?(Hash))
         return nil
       end

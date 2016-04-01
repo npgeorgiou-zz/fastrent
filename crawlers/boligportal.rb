@@ -12,7 +12,7 @@ class Boligportal < Base
 
   def scan
     # Get config options
-    config      = YAML.load_file('config/config.yaml').dig('crawlers', 'boligportal')
+    config      = YAML.load_file('config/config.yaml').dig('crawlers.boligportal')
     base_uri    = config.dig('base_uri')
     regions     = config.dig('regions')
     types       = config.dig('types')
@@ -53,7 +53,7 @@ class Boligportal < Base
           # sleep 1
 
           ads.each do |rental|
-            zip = rental.dig('jqt_location', 'zipcode').to_i
+            zip = rental.dig('jqt_location.zipcode').to_i
 
             # Check if zip is in my csv TODO: send sms if not
             if (!zip_codes.key?(zip))
@@ -72,11 +72,11 @@ class Boligportal < Base
                 url:     'http://www.boligportal.dk' + rental.dig('jqt_adUrl'),
                 posted:  rental.dig('jqt_creationDate').to_i,
                 created: Time.now.to_i,
-                rent:    rental.dig('jqt_economy', 'rent').gsub('.', '') || 'Not known',
-                size:    rental.dig('jqt_size', 'm2'),
+                rent:    rental.dig('jqt_economy.rent').gsub('.', '') || 'Not known',
+                size:    rental.dig('jqt_size.m2'),
                 zip:     zip,
-                street:  rental.dig('jqt_location', 'street') || 'Not known',
-                city:    rental.dig('jqt_location', 'city') || 'Not known',
+                street:  rental.dig('jqt_location.street') || 'Not known',
+                city:    rental.dig('jqt_location.city') || 'Not known',
                 lat:     zip_codes[zip].lat,
                 lng:     zip_codes[zip].lng,
                 site:    'Boligportal'

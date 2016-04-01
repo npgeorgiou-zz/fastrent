@@ -11,7 +11,7 @@ class Dba < Base
 
   def scan
     # Get config options
-    config   = YAML.load_file('config/config.yaml').dig('crawlers', 'dba')
+    config   = YAML.load_file('config/config.yaml').dig('crawlers.dba')
     base_uri = config.dig('base_uri')
     apiKey   = config['apiKey']
     regions  = config.dig('regions')
@@ -50,7 +50,7 @@ class Dba < Base
         ads.each do |rental|
           rental.delete('pictures')
 
-          zip = rental.dig('ad-address', 'zip-code')
+          zip = rental.dig('ad-address.zip-code')
 
           # Check if zip is in my csv TODO: send sms if not
           if (!zip_codes.key?(zip))
@@ -62,8 +62,8 @@ class Dba < Base
           posted = rental.dig('insertion-date-time').get_between('(', '+')
           posted = posted.to_i / 1000
 
-          lat = rental.dig('ad-address', 'latitude')
-          lng = rental.dig('ad-address', 'longitude')
+          lat = rental.dig('ad-address.latitude')
+          lng = rental.dig('ad-address.longitude')
 
           # If lat and lng is nil, get from csv file
           lat = (lat.nil?) ? zip_codes[zip].lat : lat
@@ -71,7 +71,7 @@ class Dba < Base
 
           # Get size and street from matrixdate
           size   = nil
-          street = rental.dig('ad-address', 'street')
+          street = rental.dig('ad-address.street')
           rental.dig('matrixdata').each do |hash|
             if hash.dig('label') === 'Adresse'
               street = hash.dig('value')
@@ -89,14 +89,14 @@ class Dba < Base
                   ad_type: typeName,
                   title:   rental.dig('title')[0...64] || 'No title',
                   text:    rental.dig('description')[0...100],
-                  url:     rental.dig('ad-url', 'href'),
+                  url:     rental.dig('ad-url.href'),
                   posted:  posted,
                   created: Time.now.to_i,
                   rent:    rental.dig('price') || 'Not known',
                   size:    size || 'Not known',
                   zip:     zip,
                   street:  street || 'Not known',
-                  city:    rental.dig('ad-address', 'city') || 'Not known',
+                  city:    rental.dig('ad-address.city') || 'Not known',
                   lat:     lat,
                   lng:     lng,
                   site:    'Dba'

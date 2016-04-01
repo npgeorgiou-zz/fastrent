@@ -14,7 +14,7 @@ class Boligbasen < Base
 
   def scan
     # Get config options
-    config   = YAML.load_file('config/config.yaml').dig('crawlers', 'boligbasen')
+    config   = YAML.load_file('config/config.yaml').dig('crawlers.boligbasen')
     base_uri = config.dig('base_uri')
 
     # Load zip codes
