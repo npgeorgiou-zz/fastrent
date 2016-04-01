@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+</head>
+
+<body>
+
+<!--Websites-->
+<div class="row">
+    <div class="col-sm-6 col-md-4 col-lg-3">
+        <h1>Sites</h1>
+        <div class="checkbox" ng-repeat="site in sites">
+            <label>
+                <input
+                        type="checkbox"
+                        name="selectedSites[]"
+                        value="{{site}}"
+                        ng-checked="selectedSites.indexOf(site) > -1"
+                        ng-click="toggleSiteSelection(site)"
+                > {{site}}
+            </label>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-md-4 col-lg-3">
+        <h1>Regions</h1>
+        <div class="checkbox" ng-repeat="region in regions">
+            <label>
+                <input
+                        type="checkbox"
+                        name="selectedRegions[]"
+                        value="{{region}}"
+                        ng-checked="selectedRegions.indexOf(region) > -1"
+                        ng-click="toggleRegionSelection(region)"
+                > {{region}}
+            </label>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-md-4 col-lg-3">
+        <h1>Types</h1>
+        <div class="checkbox" ng-repeat="type in types">
+            <label>
+                <input
+                        type="checkbox"
+                        name="selectedTypes[]"
+                        value="{{type}}"
+                        ng-checked="selectedTypes.indexOf(type) > -1"
+                        ng-click="toggleTypeSelection(type)"
+                > {{type}}
+            </label>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!--Price range-->
+<div class="row" style="margin-bottom: 30px">
+    <h1>Price range</h1>
+    <rzslider rz-slider-model="slider.minValue" rz-slider-high="slider.maxValue"
+              rz-slider-options="slider.options"></rzslider>
+
+</div>
+
+<!--Email Frequency-->
+<div class="row" style="margin-bottom: 30px" ng-show="loggedIn">
+    <h1>Email Frequency</h1>
+    <div class="radio" ng-repeat="frequency in frequencies">
+        <label>
+            <input
+                    type="radio"
+                    name="pageSet"
+                    ng-checked="selectedFrequency === frequency.mins"
+                    ng-click="toggleEmailFrequencySelection(frequency.mins)"
+            > {{frequency.name}}
+        </label>
+    </div>
+</div>
+
+<div class="row" style="margin-bottom: 30px">
+    <input type="button" class="btn" value="Save" type="submit" ng-click="saveSettings()">
+</div>
+
+</body>
+</html>

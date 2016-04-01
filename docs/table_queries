@@ -1,0 +1,49 @@
+CREATE TABLE ads (
+	ID serial PRIMARY KEY,
+	region VARCHAR (64),
+	ad_type VARCHAR (20),
+	title VARCHAR (64),
+	TEXT TEXT,
+	url VARCHAR (200),
+	posted INTEGER,
+	created INTEGER,
+	rent int4,
+	SIZE int4,
+	zip SMALLINT,
+	street VARCHAR (64),
+	city VARCHAR (64),
+	lat REAL,
+	lng REAL,
+	site VARCHAR (20)
+);
+
+CREATE TABLE users (
+	ID serial PRIMARY KEY,
+	email VARCHAR (64),
+	PASSWORD VARCHAR (64),
+	salt VARCHAR (64),
+	token VARCHAR (64),
+	settings jsonb,
+	created INTEGER
+);
+
+CREATE TABLE memberships (
+	ID serial PRIMARY KEY,
+	user_id int4 REFERENCES users (ID),
+	requested INTEGER,
+	paid INTEGER,
+	created INTEGER,
+	price int4
+);
+
+CREATE TABLE actiontokens (
+	ID serial PRIMARY KEY,
+	KEY varchar (64),
+	DATA jsonb,
+	created INTEGER
+);
+
+CREATE TABLE system_vars (
+	ID serial PRIMARY KEY,
+	email_increment INTEGER
+);

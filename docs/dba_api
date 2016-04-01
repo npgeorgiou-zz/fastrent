@@ -1,0 +1,159 @@
+Simon Klits Blog
+Dybt seriøst
+Iagttagelser
+Musik
+Professoren
+Write-ups
+DBAs hemmelige API v2
+Facebook  Twitter
+17th Aug, 2015
+
+I 2011 skrev Fas mide en blog post angående en hemmelig DBA API. Den API som han her henviser til er sidenhen blevet forældet, og DBA er rykket til deres API v2. Jeg sad og fiddlede med et værktøj som hedder "Charles". Dette program gør det muligt at lytte til alle de requests og få fat i alle de responses som din computer foretager. Man kan til dette program også forbinde sin iPhone, og lytte til dennes requests og responses. Dette forsøgte jeg mig med DBA appen. Resultatet, og en hurtig guide til hvordan du selv kan komme i kontakt med APIen, kommer nedenfor.
+
+Først og fremmest er det nødvendigt at der med requesten sendes en header som hedder "dbaapikey" og som har en gyldig API-key som value. Jeg har bare nuppet den key som min iPhone requester med, som er "087157d7-84d5-4f2b-1d02-08d282f6c857", og den virker fint. Hvis den stopper med at virke, så kontakt mig, så skal jeg nok opdatere med en der fungerer.
+
+De to primære endpoints er:
+
+https://api.dba.dk/api/v2/ads/cassearch
+https://api.dba.dk/api/v2/taxonomy/predict
+Det første benyttes til at foretage selve søgningen ud fra en række keywords. Hertil tilføjes en række argumenter som indgrænser søgningen, eller filtrerer på en bestemt vis.
+
+Det andet endpoint benyttes til at få fat i kategorier som passer til de indtastede keywords. Hvis du på dba.dk indtaster f.eks. "iphone" i søgefeltet, så dukker der en lille menu op som heder "Fundet i...", og som giver dig en række kategorier hvori søgeordet findes. Det er disse kategorier vi får fra det andet endpoint.
+
+Du opretter altså en helt almindelig GET-request, med førnævnte header. Et eksempel på dette kunne være:
+
+https://api.dba.dk/api/v2/ads/cassearch?q=iphone&p=-1999&ps=20&pn=2&format=json
+Denne request vil give os de 20 første annoncer som passer på keywordet "iphone", og som koster imellem 0 og 1 999 kroner, og den giver os det i JSON.
+
+Jeg har udviklet et lille værktøj, så du kan prøve at query API'en uden at skulle til at ændre headeren i dine requests. Du kan finde det her: http://dbaapi.simonklit.com
+
+Se nedenfor for alle de andre argumenter som jeg har fundet frem til.
+
+Til begge endpoints findes følgende mulige argumenter:
+Format (påkrævet):
+Det format som du ønsker responsen i. Bemærk: Jeg har kun arbejdet med API'en i JSON. Umiddelbart smider den en fejl hvis jeg ændrer formatet til XML.
+Key: format
+Values:
+json: JSON
+xml: XML
+csv: CSV
+jsv: JSV
+
+Til første endpoint findes følgende mulige argumenter:
+Query (påkrævet):
+Dine søgeord.
+Key: q
+Values:
+xxxxx: Dine søgeord, sepereret af et +-tegn.
+
+Antal annoncer (påkrævet):
+Antal annoncer som skal hentes.
+Key: ps
+Values:
+xx: Det antal annoncer som skal hentes. DBA appen henter per default 20.
+
+Sidetal (påkrævet):
+Hvilken side du er kommet til i annoncerne.
+Key: pn
+Values:
+x: Det sidetal du er kommet til.
+
+Regioner:
+Indgrænser søgningen til en bestemt region i Danmark.
+Key: reg
+Values:
+10: København
+8000: Aarhus
+5000: Odense
+9000: Aalborg
+20: Jylland
+1: Nordjylland
+2: Østjylland
+3: Midt- og Vestjylland
+4: Sønderjylland
+5: Fyn
+21: Sjælland
+6: Nordsjælland
+7: Vestsjælland
+8: Sydsjælland og øer
+
+Annoncetype:
+Indgrænser søgningen til en bestemt annoncetype.
+Key: at
+Values:
+2: Sælges – default for DBA appen.
+8: Tilbydes
+4: Udlejes
+0: Andet
+1: Købes
+
+Pris:
+Indgrænser søgningen til en bestemt prisrange.
+Key: p
+Values:
+-1999: 0-1.999 kr.
+2000-4999: 2.000-4.999 kr.
+5000-7999: 5.000-7.999 kr.
+8000-15000: 8.000-15.000 kr.
+15001: større end 15.000 kr.
+
+Kun haster:
+Indgrænser søgningen til kun at vise annoncer som er markeret "haster".
+Key: urgent
+Values:
+true: Kun "Haster"
+
+NemID
+Indgrænser søgningen til kun at vise annoncer hvor indehaveren er NemID godkendt.
+Key: nemid
+Values:
+true: Kun fra NemID-brugere
+
+Private og forhandlere:
+Indgrænser søgningen til kun at vise fra enten private, forhandlere eller begge dele.
+Key: ot
+Values:
+null (argument ikke tilføjet): Alle annoncer
+private: Kun private
+dealer: Kun forhandlere
+
+Sorteringsmuligheder:
+Sorterer resultaterne på en bestemt vis.
+Key: sort
+Values:
+null (argument ikke tilføjet): Relevans
+price-asc: Pris: billigst først
+price-desc: Pris: dyrest først
+date-desc: Dato: Nyest først
+date-asc: Dato: Ældst først
+dist-asc: Nærmest dig – kræver breddegrad og længdegrad parametre
+
+Breddegrad:
+Din breddegrad. Nødvendig for "dist-asc" under sorteringsmuligheder.
+Key: lat
+Values:
+xx.xxxxxxx: Din breddegrad
+
+Længdegrad:
+Din længdegrad. Nødvendig for "dist-asc" under sorteringsmuligheder.
+Key: long
+Values:
+xx.xxxxxxx: Din længdegrad
+
+Kategori:
+Key: cla
+Values:
+Afhænger af response fra taxonomy endpoint. Fra responsen tager man "classificationId" fra den ønskede kategori, og bruger dette som value ved cla keyen.
+
+Til andet endpoint findes følgende argumenter:
+Query (påkrævet):
+Key: query
+Values:
+xxxxxx: Dine søgeord, sepereret af %20.
+
+Jeg glæder mig til at se om nogen opfinder noget spændende med det.
+
+Simon Klit
+E-mail: simon@simonklit.com
+RSS Feed
+Feedburner

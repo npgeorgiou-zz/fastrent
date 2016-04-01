@@ -1,0 +1,273 @@
+<!doctype html>
+<html ng-app="mainApp" ng-controller="ResultsController">
+<head>
+</head>
+
+<style>
+
+    .btn {
+        color: #3e4344;
+        text-align: center;
+        border-bottom-style: solid !important;
+        margin-top: 30px;
+        background-color: #3269c8 !important;
+        border-color: #3269c8;
+        border-bottom-color: #3269c8;
+        border-bottom-width: 4px;
+        width: 100%;
+        height: 45px;
+        font-size: 1.2em;
+        background-image: none !important;
+        background-repeat: no-repeat !important;
+    }
+
+    .btn-boligportal {
+        color: #3e4344;
+        text-align: center;
+        border-bottom-style: solid !important;
+        margin-top: 30px;
+        background-color: #ff8533 !important;
+        border-color: #ff8533;
+        border-bottom-color: #ff8533;
+        border-bottom-width: 4px;
+        width: 100%;
+        height: 45px;
+        font-size: 1.2em;
+        background-image: none !important;
+        background-repeat: no-repeat !important;
+    }
+
+    .btn-boligbasen {
+        color: #3e4344;
+        text-align: center;
+        border-bottom-style: solid !important;
+        margin-top: 30px;
+        background-color: #d4e7d1 !important;
+        border-color: #d4e7d1;
+        border-bottom-color: #d4e7d1;
+        border-bottom-width: 4px;
+        width: 100%;
+        height: 45px;
+        font-size: 1.2em;
+        background-image: none !important;
+        background-repeat: no-repeat !important;
+    }
+
+    .apartment {
+        position: relative;
+    }
+
+    .apartment .new {
+        -ms-transform: rotate(15deg);
+        -webkit-transform: rotate(15deg);
+        transform: rotate(15deg);
+        color: #EEE;
+        border: 3px solid #FFF;
+        border-radius: 30px;
+        padding: 0 10px;
+        font-size: 2.5em;
+        font-weight: bold;
+        position: absolute;
+        top: -5px;
+        right: -15px;
+        opacity: 0.8;
+        animation: blinker 1s linear infinite;
+    }
+
+    @keyframes blinker {
+        50% {
+            opacity: 0.5;
+        }
+    }
+
+    .apartment .panel-heading {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .apartment .panel-heading a {
+        text-decoration: none;
+        color: #ebebeb;
+    }
+
+    .apartment .body .img-wrapper {
+        margin-bottom: 15px;
+    }
+
+    .apartment .body img {
+        width: 100%;
+    }
+
+    .apartment .body .description {
+        height: 150px;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    @media (max-width: 767px) {
+        .apartment .body .description {
+            height: auto;
+        }
+    }
+
+    .apartment .body .description .meta {
+        margin: 0 0 15px;
+    }
+
+    .apartment .body .description .meta td {
+        padding: 0 10px 2px 0;
+        font-size: 1.1em;
+        border-bottom: 1px solid #777;
+    }
+
+    .apartment .body .description .meta tr:last-child td {
+        border: none;
+    }
+
+    .apartment .body .description .meta td.value {
+        text-align: right;
+    }
+
+    .apartment .body .description .meta td a {
+        color: #df691a;
+        text-decoration: none;
+    }
+
+    .apartment .body p {
+        clear: both;
+        padding-top: 5px;
+    }
+
+    .apartment .body a.btn {
+        width: 100%;
+    }
+
+    .data-sources .panel-heading {
+        position: relative;
+    }
+
+    .data-sources .panel-heading a {
+        text-decoration: none;
+        color: #ebebeb;
+    }
+
+    .data-sources .panel-heading .status {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
+
+    .data-sources .panel-body p {
+        height: 135px;
+    }
+
+    .data-sources .panel-body .btn-wrapper a {
+        width: 100%;
+        text-align: center;
+    }
+</style>
+
+<body>
+
+<div class="row">
+    <div ng-repeat="ad in ads">
+        <div class="apartment col-sm-6 col-md-4 col-lg-3">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <b>{{ ad.title | limitTo: 35 }}{{ ad.title.length > 35 ? '...' : '' }}</b>
+                </div>
+                <div class="panel-body">
+                    <div class="body">
+                        <div class="img-wrapper">
+                            <img style="cursor: pointer" src="https://maps.googleapis.com/maps/api/staticmap?
+                                &markers=color:green%7C{{ad.lat}},{{ad.lng}}
+                                &zoom=10
+                                &size=250x250
+                                &maptype=terrain" ng-click="openTab(ad.url)">
+
+                        </div>
+                        <div class="description">
+                            <table class="table meta">
+                                <tbody>
+                                <tr>
+                                    <td>Address</td>
+                                    <td class="value">
+                                        {{ ad.street + ' ,' + ad.city | limitTo: 25 }}{{ (ad.street + ' ,' +   ad.city).length > 25 ? '...' : '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Price</td>
+                                    <td class="value">{{ad.rent}} .kr</td>
+                                </tr>
+                                <tr>
+                                    <td>Type</td>
+                                    <td class="value">{{ad.ad_type}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Size</td>
+                                    <td class="value">
+                                        {{ad.size}} m<sup>2</sup>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Posted</td>
+                                    <td class="value">{{ad.postedAgo}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div style="clear: both;">
+                            <div ng-show="ad.site == 'Boligportal'">
+                                <button type="button" class="btn btn-boligportal" ng-click="openTab(ad.url)">
+                                    {{ad.site}}
+                                </button>
+                            </div>
+                            <div ng-show="ad.site == 'Dba'">
+                                <button type="button" class="btn btn-dba" ng-click="openTab(ad.url)">
+                                    {{ad.site}}
+                                </button>
+                            </div>
+                            <div ng-show="ad.site == 'Boligbasen'">
+                                <button type="button" class="btn btn-boligbasen" ng-click="openTab(ad.url)">
+                                    {{ad.site}}
+                                </button>
+                            </div>
+
+                            <!--<a style="background-color:#fba92b;" class="btn btn-primary" href="https://href.li/?http://www.boligportal.dk/lejebolig/dp/3-vaerelses-lejlighed-frederiksberg/id-4431876" target="_blank" rel="noreferrer">-->
+                            <!--Bolig Portal-->
+                            <!--</a>-->
+                        </div>
+                    </div>
+
+                    <!--<div>-->
+                    <!--<span class="glyphicon glyphicon-map-marker"></span>-->
+                    <!--{{ ad.street + ' ,' + ad.city | limitTo: 25 }}{{ (ad.street + ' ,' +   ad.city).length > 25 ? '...' : '' }}-->
+                    <!--&lt;!&ndash;{{ad.street}}, {{ad.city}}&ndash;&gt;-->
+                    <!--</div>-->
+                    <!--<img src="/img/coins.png" height="20" width="20">{{ad.rent}}-->
+                    <!--</br>-->
+                    <!--<img src="/img/ruler.png" height="20" width="20">{{ad.size}} m<sup>2</sup>-->
+                    <!--</br>-->
+                    <!--<img src="/img/ruler.png" height="20" width="20">{{ad.ad_type}}-->
+                    <!--</br>-->
+                    <!--<img src="/img/ruler.png" height="20" width="20">{{ad.postedAgo}}-->
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+<div infinite-scroll='fetch()' infinite-scroll-disabled='busy'
+     infinite-scroll-distance='0.5'>
+    <div ng-show='busy'>Loading data...</div>
+</div>
+</body>
+</html>

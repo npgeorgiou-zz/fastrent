@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+</head>
+
+<body>
+
+<div class="row">
+
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-4">
+        <h1>Log in to your account</h1>
+        <br><br>
+        <form name="form" class="form-group" novalidate>
+
+            <label class="login-label" for="email">Email</label>
+            <input type="email" name="email" id="email" class="form-control input-sm" ng-model="email" required>
+            <span class="error-feedback" ng-show="form.email.$error.email">This is not a valid email.</span>
+            <span class="error-feedback">{{feedback}}</span>
+
+            <br><br>
+
+            <label class="login-label" for="password">Password</label>
+            <input type="password" name="password" id="password" class="form-control input-sm" ng-model="password"
+                   required/>
+            <span class="error-feedback">{{feedback}}</span>
+
+            <br><br><br>
+            <input type="button" class="btn" value="Log in" type="submit" ng-click="login()" ng-disabled="form.$invalid">
+            <div class="forgot-link">
+                <a class="login-forgot a-blue" ng-click="goToRequestNewPasswordView()">Forgot your password?</a>
+            </div>
+
+        </form>
+    </div>
+    <div class="col-md-4">
+    </div>
+
+</div>
+
+</body>
+</html>
