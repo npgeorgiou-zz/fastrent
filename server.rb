@@ -1,13 +1,20 @@
 require 'webrick'
 require 'yaml'
 require 'json'
+environment = ARGV[0]
+if environment != 'development' && environment != 'production'
+  raise "Specify either 'development' or 'production' as script argument"
+end
+
 require 'digest'
 require_relative 'ar.rb'
 require_relative 'handlers/email.rb'
+require_relative 'util/hash'
 
-port = ENV['PORT'] || YAML.load_file('config/config.yaml')['port']
+config = YAML.load_file('config/config.yaml')
+
+port = ENV['PORT'] || config.dig("server.#{environment}.port")
 puts "Starting up server at port #{port}..."
-puts File.dirname(__FILE__) + '/public'
 server = WEBrick::HTTPServer.new(:Port => port, :DocumentRoot => File.dirname(__FILE__) + '/public')
 
 server.mount_proc '/fetch' do |req, res|

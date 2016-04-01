@@ -1,3 +1,8 @@
+environment = ARGV[0]
+if environment != 'development' && environment != 'production'
+  raise "Specify either 'development' or 'production' as script argument"
+end
+
 require_relative 'crawlers/boligportal'
 require_relative 'crawlers/dba'
 require_relative 'crawlers/boligbasen'

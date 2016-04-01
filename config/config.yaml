@@ -1,7 +1,19 @@
-host: http://localhost
-port: 3000
-data: |
-  serviceName=getProperties&data={"amtId":"#{amtId}","huslejeMin":"0","huslejeMax":"50000","stoerrelseMin":"0","stoerrelseMax":"0","postnrArr":[],"boligTypeArr":["0"],"lejeLaengdeArr":["4"],"page":"1","limit":"50","sortCol":"3","sortDesc":"1","visOnSiteBolig":0,"almen":-1,"billeder":-1,"husdyr":-1,"mobleret":-1,"delevenlig":-1,"fritekst":"","overtagdato":"","emailservice":"","kunNyeste":false,"muListeMuId":"","fremleje":-1,"roomsNum":"0"}
+server:
+  development:
+    port: 3000
+  production:
+    port: 3000
+db:
+  development:
+    host: localhost
+    database: postgres
+    username: postgres
+    password: Teratodes66
+  production:
+    host: ec2-54-243-243-89.compute-1.amazonaws.com
+    database: d7bc9b2mvdfj9q
+    username: ikjgqxbowiipfw
+    password: tdNbQfa5oyKC5EQ71pClxBOKY4
 crawlers:
   boligportal:
     base_uri: http://www.boligportal.dk/api/soeg_leje_bolig.php
