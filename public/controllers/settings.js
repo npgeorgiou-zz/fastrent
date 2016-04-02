@@ -47,7 +47,7 @@ app.controller('SettingsController', ['$scope', '$location', '$http', '$q', 'set
 
         // Types
         $scope.types = [
-            'Appartment',
+            'Apartment',
             'House',
             'Room'
         ];
