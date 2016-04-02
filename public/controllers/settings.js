@@ -59,19 +59,23 @@ app.controller('SettingsController', ['$scope', '$location', '$http', '$q', 'set
         // Email
         $scope.frequencies = [
             {
-                name:'30 minutes',
+                name:"Don't send me emails",
+                mins: 0
+            },
+            {
+                name:'Send me every 30 minutes',
                 mins: 30
             },
             {
-                name:'1 hour',
+                name:'Send me every 1 hour',
                 mins: 60
             },
             {
-                name:'2 hours',
+                name:'Send me every 2 hours',
                 mins: 120
             },
             {
-                name:'4 hours',
+                name:'Send me every 4 hours',
                 mins: 240
             },
             {
