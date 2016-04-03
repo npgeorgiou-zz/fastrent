@@ -6,7 +6,7 @@ require_relative 'models/user'
 require_relative 'models/membership'
 require_relative 'models/actiontoken'
 
-config = YAML.load_file('config/fastrent.yml')
+config = YAML.load_file('config/config.yml')
 environment = ENV['RACK_ENV']
 
 ActiveRecord::Base.establish_connection(
