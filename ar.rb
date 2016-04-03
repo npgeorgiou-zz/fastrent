@@ -6,9 +6,8 @@ require_relative 'models/user'
 require_relative 'models/membership'
 require_relative 'models/actiontoken'
 
-config = YAML.load_file('config/config.yaml')
-
-environment = ARGV[0]
+config = YAML.load_file('config/config.yml')
+environment = ENV['RACK_ENV']
 
 ActiveRecord::Base.establish_connection(
     :adapter  => 'postgresql',

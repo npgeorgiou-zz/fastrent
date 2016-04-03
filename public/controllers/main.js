@@ -19,7 +19,7 @@ Array.prototype.last = function () {
     return this[this.length - 1];
 };
 
-var app = angular.module("mainApp", ['ngRoute', 'rzModule', 'ui.bootstrap', 'infinite-scroll']);
+var app = angular.module('mainApp', ['ngRoute', 'rzModule', 'ui.bootstrap', 'infinite-scroll', 'ui.bootstrap.modal']);
 
 app.run(["$rootScope", '$templateCache', 'authenticationService',
     function ($rootScope, $templateCache, authenticationService) {
@@ -37,54 +37,57 @@ app.run(["$rootScope", '$templateCache', 'authenticationService',
 app.config(['$routeProvider', function($routeProvider) {
     $routeProvider.
     when('/results', {
-        templateUrl: 'results.htm',
+        templateUrl: 'views/results.htm',
         controller: 'ResultsController'
     }).
     when('/register', {
-        templateUrl: 'register.htm',
+        templateUrl: 'views/register.htm',
         controller: 'RegisterController'
     }).
     when('/waiting-payment', {
-        templateUrl: 'waiting_payment.htm',
+        templateUrl: 'views/waiting_payment.htm',
         controller: 'WaitingPaymentController'
     }).
     when('/login', {
-        templateUrl: 'login.htm',
+        templateUrl: 'views/login.htm',
         controller: 'LoginController'
     }).
     when('/request-new-password', {
-        templateUrl: 'request_new_password.htm',
+        templateUrl: 'views/request_new_password.htm',
         controller: 'RequestNewPasswordController'
     }).
     when('/set-new-password', {
-        templateUrl: 'set_new_password.htm',
+        templateUrl: 'views/set_new_password.htm',
         controller: 'SetNewPasswordController'
     }).
     when('/settings', {
-        templateUrl: 'settings.htm',
+        templateUrl: 'views/settings.htm',
         controller: 'SettingsController'
     }).
     when('/profile', {
-        templateUrl: 'profile.htm',
+        templateUrl: 'views/profile.htm',
         controller: 'ProfileController'
     }).
     when('/user-exists', {
-        templateUrl: 'user_exists.htm',
+        templateUrl: 'views/user_exists.htm',
         controller: 'UserExistsController'
     }).
     when('/password-link-sent', {
-        templateUrl: 'password_link_sent.htm',
+        templateUrl: 'views/password_link_sent.htm',
         controller: 'PasswordLinkSentController'
     }).
     when('/password-link-invalid', {
-            templateUrl: 'password_link_invalid.htm',
+            templateUrl: 'views/password_link_invalid.htm',
             controller: 'PasswordLinkInvalidController'
         }).
     when('/password-changed', {
-        templateUrl: 'password_changed.htm',
+        templateUrl: 'views/password_changed.htm',
         controller: 'PasswordChangedController'
+    }).
+    when('/goodbye', {
+        templateUrl: 'views/goodbye.htm',
+        controller: 'GoodbyeController'
     })
-
         .otherwise({
         redirectTo: '/results'
     });
@@ -102,8 +105,9 @@ app.controller('MainController', ['$scope', '$rootScope', '$location', '$http', 
             }).success(function (data, status, headers, config) {
                 console.log(data);
 
-                // Delete token
+                // Delete token and settings
                 authenticationService.logOutUser();
+                $location.path('/results');
             }).error(function (data, status, headers, config) {
                 console.log('Error')
                 switch (status) {
@@ -223,54 +227,6 @@ app.service('intervalService', function () {
 //    }
 //}]);
 
-//app.directive('myMap', function() {
-//    // directive link function
-//    var link = function(scope, element, attrs) {
-//        var map;
-//
-//        // map config
-//        var mapOptions = {
-//            center: new google.maps.LatLng(scope.lat, scope.lng),
-//            zoom: 9,
-//            scrollwheel: false,
-//            disableDefaultUI: true
-//        };
-//
-//        // init the map
-//        function initMap() {
-//            if (map === void 0) {
-//                map = new google.maps.Map(element[0], mapOptions);
-//            }
-//        }
-//
-//        // place a marker
-//        function setMarker(map, position, title, content) {
-//            var marker;
-//            var markerOptions = {
-//                position: position,
-//                map: map,
-//                icon: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png'
-//            };
-//
-//            marker = new google.maps.Marker(markerOptions);
-//        }
-//
-//        // show the map and place the marker
-//        initMap();
-//        setMarker(map, new google.maps.LatLng(scope.lat, scope.lng));
-//    };
-//
-//    return {
-//        restrict: 'E',
-//        scope: {
-//            lat: '=',
-//            lng: '='
-//        },
-//        template: '<div class="gmaps"></div>',
-//        replace: true,
-//        link: link
-//    };
-//});
 app.directive("compareTo", function() {
     return {
         require: "ngModel",
@@ -287,5 +243,90 @@ app.directive("compareTo", function() {
                 ngModel.$validate();
             });
         }
+    };
+});
+app.directive('modal', function(){
+    return {
+        template:
+        '<div class="modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">' +
+        '<div class="modal-dialog">' +
+        '<div class="modal-content" ng-transclude></div>' +
+        '</div>' +
+        '</div>',
+        restrict: 'E',
+        transclude: true,
+        replace:true,
+        scope:{visible:'=', onSown:'&', onHide:'&'},
+        link:function postLink(scope, element, attrs){
+
+            $(element).modal({
+                show: false,
+                keyboard: attrs.keyboard,
+                backdrop: attrs.backdrop
+            });
+
+            scope.$watch(function(){return scope.visible;}, function(value){
+
+                if(value == true){
+                    $(element).modal('show');
+                }else{
+                    $(element).modal('hide');
+                }
+            });
+
+            $(element).on('shown.bs.modal', function(){
+                scope.$apply(function(){
+                    scope.$parent[attrs.visible] = true;
+                });
+            });
+
+            $(element).on('shown.bs.modal', function(){
+                scope.$apply(function(){
+                    scope.onSown({});
+                });
+            });
+
+            $(element).on('hidden.bs.modal', function(){
+                scope.$apply(function(){
+                    scope.$parent[attrs.visible] = false;
+                });
+            });
+
+            $(element).on('hidden.bs.modal', function(){
+                scope.$apply(function(){
+                    scope.onHide({});
+                });
+            });
+        }
+    };
+});
+app.directive('modalHeader', function(){
+    return {
+        template:
+        '<div class="modal-header">' +
+        '<button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
+        '<span aria-hidden="true">&times;</span>' +
+        '</button>' +
+        '<h4 class="modal-title">{{title}}</h4>' +
+        '</div>',
+        replace:true,
+        restrict: 'E',
+        scope: {title:'@'}
+    };
+});
+app.directive('modalBody', function(){
+    return {
+        template:'<div class="modal-body">{{body}}</div>',
+        replace:true,
+        restrict: 'E',
+        scope: {body:'@'}
+    };
+});
+app.directive('modalFooter', function(){
+    return {
+        template:'<div class="modal-footer" ng-transclude></div>',
+        replace:true,
+        restrict: 'E',
+        transclude: true
     };
 });

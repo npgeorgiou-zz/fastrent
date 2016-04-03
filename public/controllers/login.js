@@ -17,6 +17,9 @@ app.controller('LoginController', ['$scope', '$rootScope', '$location', '$http',
                 }
 
             }).success(function (data, status, headers, config) {
+                console.log(data)
+                console.log(data.token)
+                console.log(data.settings)
                 // Save token
                 authenticationService.logInUser(data.token);
 

@@ -2,128 +2,152 @@
 <html>
 <head>
     <style>
-        .center-me {
-            /*width: 600px;*/
-            margin: 0 auto;
-            margin-bottom: 40px;
-        }
+        /*.center-me {*/
+        /*!*width: 600px;*!*/
+        /*margin: 0 auto;*/
+        /*margin-bottom: 40px;*/
+        /*}*/
 
-        .box {
-            width: 200px;
-            height: 200px;
-            position: relative;
-            border: 1px solid #ffffb3;
-            background: #ffffb3;
-            margin-bottom: 200px;
-        }
-        .ribbon {
-            position: absolute;
-            left: -5px; top: -5px;
-            z-index: 1;
-            overflow: hidden;
-            width: 200px; height: 200px;
-            text-align: right;
-        }
-        .ribbon-valid span {
-            font-size: 1em;
-            font-weight: bold;
-            color: #FFF;
-            text-transform: uppercase;
-            text-align: center;
-            line-height: 20px;
-            transform: rotate(-45deg);
-            -webkit-transform: rotate(-45deg);
-            width: 100px;
-            display: block;
-            background: #79A70A;
-            background: linear-gradient(#9BC90D 0%, #79A70A 100%);
-            box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
-            position: absolute;
-            top: 19px; left: -21px;
-        }
-        .ribbon-valid span::before {
-            content: "";
-            position: absolute; left: 0px; top: 100%;
-            z-index: -1;
-            border-left: 3px solid #79A70A;
-            border-right: 3px solid transparent;
-            border-bottom: 3px solid transparent;
-            border-top: 3px solid #79A70A;
-        }
-        .ribbon-valid span::after {
-            content: "";
-            position: absolute; right: 0px; top: 100%;
-            z-index: -1;
-            border-left: 3px solid transparent;
-            border-right: 3px solid #79A70A;
-            border-bottom: 3px solid transparent;
-            border-top: 3px solid #79A70A;
-        }
+        /*.box {*/
+        /*width: 200px;*/
+        /*height: 200px;*/
+        /*position: relative;*/
+        /*border: 1px solid #ffffb3;*/
+        /*background: #ffffb3;*/
+        /*margin-bottom: 200px;*/
+        /*}*/
+        /*.ribbon {*/
+        /*position: absolute;*/
+        /*left: -5px; top: -5px;*/
+        /*z-index: 1;*/
+        /*overflow: hidden;*/
+        /*width: 200px; height: 200px;*/
+        /*text-align: right;*/
+        /*}*/
+        /*.ribbon-valid span {*/
+        /*font-size: 1em;*/
+        /*font-weight: bold;*/
+        /*color: #FFF;*/
+        /*text-transform: uppercase;*/
+        /*text-align: center;*/
+        /*line-height: 20px;*/
+        /*transform: rotate(-45deg);*/
+        /*-webkit-transform: rotate(-45deg);*/
+        /*width: 100px;*/
+        /*display: block;*/
+        /*background: #79A70A;*/
+        /*background: linear-gradient(#9BC90D 0%, #79A70A 100%);*/
+        /*box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);*/
+        /*position: absolute;*/
+        /*top: 19px; left: -21px;*/
+        /*}*/
+        /*.ribbon-valid span::before {*/
+        /*content: "";*/
+        /*position: absolute; left: 0px; top: 100%;*/
+        /*z-index: -1;*/
+        /*border-left: 3px solid #79A70A;*/
+        /*border-right: 3px solid transparent;*/
+        /*border-bottom: 3px solid transparent;*/
+        /*border-top: 3px solid #79A70A;*/
+        /*}*/
+        /*.ribbon-valid span::after {*/
+        /*content: "";*/
+        /*position: absolute; right: 0px; top: 100%;*/
+        /*z-index: -1;*/
+        /*border-left: 3px solid transparent;*/
+        /*border-right: 3px solid #79A70A;*/
+        /*border-bottom: 3px solid transparent;*/
+        /*border-top: 3px solid #79A70A;*/
+        /*}*/
 
-        .ribbon-expired span {
-            font-size: 1em;
-            font-weight: bold;
-            color: #FFF;
-            text-transform: uppercase;
-            text-align: center;
-            line-height: 20px;
-            transform: rotate(-45deg);
-            -webkit-transform: rotate(-45deg);
-            width: 100px;
-            display: block;
-            background: #79A70A;
-            background: linear-gradient(#F70505 0%, #8F0808 100%);
-            box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
-            position: absolute;
-            top: 19px; left: -21px;
-        }
-        .ribbon-expired span::before {
-            content: "";
-            position: absolute; left: 0px; top: 100%;
-            z-index: -1;
-            border-left: 3px solid #8F0808;
-            border-right: 3px solid transparent;
-            border-bottom: 3px solid transparent;
-            border-top: 3px solid #8F0808;
-        }
-        .ribbon-expired span::after {
-            content: "";
-            position: absolute; right: 0px; top: 100%;
-            z-index: -1;
-            border-left: 3px solid transparent;
-            border-right: 3px solid #8F0808;
-            border-bottom: 3px solid transparent;
-            border-top: 3px solid #8F0808;
-        }
+        /*.ribbon-expired span {*/
+        /*font-size: 1em;*/
+        /*font-weight: bold;*/
+        /*color: #FFF;*/
+        /*text-transform: uppercase;*/
+        /*text-align: center;*/
+        /*line-height: 20px;*/
+        /*transform: rotate(-45deg);*/
+        /*-webkit-transform: rotate(-45deg);*/
+        /*width: 100px;*/
+        /*display: block;*/
+        /*background: #79A70A;*/
+        /*background: linear-gradient(#F70505 0%, #8F0808 100%);*/
+        /*box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);*/
+        /*position: absolute;*/
+        /*top: 19px; left: -21px;*/
+        /*}*/
+        /*.ribbon-expired span::before {*/
+        /*content: "";*/
+        /*position: absolute; left: 0px; top: 100%;*/
+        /*z-index: -1;*/
+        /*border-left: 3px solid #8F0808;*/
+        /*border-right: 3px solid transparent;*/
+        /*border-bottom: 3px solid transparent;*/
+        /*border-top: 3px solid #8F0808;*/
+        /*}*/
+        /*.ribbon-expired span::after {*/
+        /*content: "";*/
+        /*position: absolute; right: 0px; top: 100%;*/
+        /*z-index: -1;*/
+        /*border-left: 3px solid transparent;*/
+        /*border-right: 3px solid #8F0808;*/
+        /*border-bottom: 3px solid transparent;*/
+        /*border-top: 3px solid #8F0808;*/
+        /*}*/
 
     </style>
 </head>
 
 <body>
 
-    <div class="center-me"  ng-repeat="membership in memberships">
 
 
-        <div class="box">
-            <div class="ribbon ribbon-valid"><span>Valid</span></div>
-            <span class="p1">Requested: </span> <span class="p1">{{membership.requested}}</span> </br>
-            <span class="p1">Paid: </span> <span class="p1">{{membership.paid}}</span> </br>
-            <span class="p1">Created: </span> <span class="p1">{{membership.created}}</span> </br>
-            <span class="p1">Price: </span> <span class="p1">{{membership.price}}</span> </br>
-        </div>
+<h3>{{title}}</h3>
+<button class="btn btn-red" ng-click="showModal = true">Delete my profile</button>
+<modal visible="showModal" on-sown="modalShown()" on-hide="modalHide()">
+    <modal-header title="Are you sure?"></modal-header>
+    <modal-body   body="You will not be able to recover your profile"></modal-body>
+    <modal-footer>
+        <input type="button" class="btn btn-red" value="I am sure, delete me" ng-click="deleteProfile()">
+        <input type="button" class="btn" value="No, don't delete me" data-dismiss="modal">
+    </modal-footer>
+</modal>
 
-        <div class="box">
-            <div class="ribbon ribbon-expired"><span>Expired</span></div>
-        </div>
+<div class="center-me" ng-repeat="membership in memberships">
 
-        <!--<div style="border:1px solid #000">-->
-            <!--<span class="p1">Requested: </span> <span class="p1">{{membership.requested}}</span> </br>-->
-            <!--<span class="p1">Paid: </span> <span class="p1">{{membership.paid}}</span> </br>-->
-            <!--<span class="p1">Created: </span> <span class="p1">{{membership.created}}</span> </br>-->
-            <!--<span class="p1">Price: </span> <span class="p1">{{membership.price}}</span> </br>-->
-        <!--</div>-->
-    </div>
+    <!--<input type="button" class="btn btn-red" value="Delete profile" ng-click="toggleModal()">-->
+
+    <!--<modal-->
+            <!--title="Are you sure?"-->
+            <!--body="You will not be able to recover your profile"-->
+            <!--confirm="I am sure, delete me"-->
+            <!--abort="No, don't delete me"-->
+            <!--visible="showModal"-->
+    <!--&gt;-->
+        <!--<input type="button" class="btn btn-red" value="I am sure, delete me" ng-click="confirm()">-->
+        <!--<input type="button" class="btn" value="No, don't delete me" data-dismiss="modal">-->
+    <!--</modal>-->
 
 
+    <!--<div class="box">-->
+        <!--<div class="ribbon ribbon-valid"><span>Valid</span></div>-->
+        <!--<span class="p1">Requested: </span> <span class="p1">{{membership.requested}}</span> </br>-->
+        <!--<span class="p1">Paid: </span> <span class="p1">{{membership.paid}}</span> </br>-->
+        <!--<span class="p1">Created: </span> <span class="p1">{{membership.created}}</span> </br>-->
+        <!--<span class="p1">Price: </span> <span class="p1">{{membership.price}}</span> </br>-->
+    <!--</div>-->
+
+    <!--<div class="box">-->
+        <!--<div class="ribbon ribbon-expired"><span>Expired</span></div>-->
+    <!--</div>-->
+
+    <!--<div style="border:1px solid #000">-->
+    <!--<span class="p1">Requested: </span> <span class="p1">{{membership.requested}}</span> </br>-->
+    <!--<span class="p1">Paid: </span> <span class="p1">{{membership.paid}}</span> </br>-->
+    <!--<span class="p1">Created: </span> <span class="p1">{{membership.created}}</span> </br>-->
+    <!--<span class="p1">Price: </span> <span class="p1">{{membership.price}}</span> </br>-->
+    <!--</div>-->
+</div>
 </body>
 </html>

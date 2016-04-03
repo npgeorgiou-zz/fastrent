@@ -11,7 +11,7 @@ class Dba < Base
 
   def scan
     # Get config options
-    config   = YAML.load_file('config/config.yaml').dig('crawlers.dba')
+    config   = YAML.load_file('config/config.yml').dig('crawlers.dba')
     base_uri = config.dig('base_uri')
     apiKey   = config['apiKey']
     regions  = config.dig('regions')

@@ -12,7 +12,7 @@ class Boligportal < Base
 
   def scan
     # Get config options
-    config      = YAML.load_file('config/config.yaml').dig('crawlers.boligportal')
+    config      = YAML.load_file('config/config.yml').dig('crawlers.boligportal')
     base_uri    = config.dig('base_uri')
     regions     = config.dig('regions')
     types       = config.dig('types')

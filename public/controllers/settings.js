@@ -129,19 +129,21 @@ app.controller('SettingsController', ['$scope', '$location', '$http', '$q', 'set
             if (authenticationService.isUserLoggedIn()) {
                 // Save settings in user table
                 updateUserSettings(newSettings).then(function (response) {
-                    console.log(response)
+                    //console.log(response)
+                    console.log(response.status)
                     switch (response.status) {
                         case 404:
                             // User not found
-                            console.log(response.data)
                             break;
                         case 403:
                             // Membership expired
-                            console.log(response.data)
                             break;
                         case 200:
                             // OK
-                            settingsService.setSettings(response.data)
+                            console.log(response)
+                            console.log(response.data)
+                            console.log(response.data.settings)
+                            settingsService.setSettings(response.data.settings)
                             $location.path("/results");
                             break;
                         default:
