@@ -248,7 +248,7 @@ app.directive("compareTo", function() {
 app.directive('modal', function(){
     return {
         template:
-        '<div class="modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">' +
+        '<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">' +
         '<div class="modal-dialog">' +
         '<div class="modal-content" ng-transclude></div>' +
         '</div>' +
